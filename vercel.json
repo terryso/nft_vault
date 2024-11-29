@@ -7,9 +7,9 @@
   ],
   "build": {
     "env": {
-      "VITE_OPENSEA_API_KEY": "@vite_opensea_api_key",
-      "VITE_WALLET_ADDRESS": "@vite_wallet_address",
-      "VITE_FILTER_KEYWORDS": "@vite_filter_keywords"
+      "NFT_OPENSEA_API_KEY": "@nft_opensea_api_key",
+      "NFT_WALLET_ADDRESS": "@nft_wallet_address",
+      "NFT_FILTER_KEYWORDS": "@nft_filter_keywords"
     }
   }
 }

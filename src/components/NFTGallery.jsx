@@ -5,9 +5,9 @@ import placeholderImage from '../assets/placeholder-nft.svg';
 
 const NFTGallery = () => {
   const ITEMS_PER_PAGE = 50;
-  const walletAddress = import.meta.env.VITE_WALLET_ADDRESS;
-  const apiKey = import.meta.env.VITE_OPENSEA_API_KEY;
-  const filterKeywords = import.meta.env.VITE_FILTER_KEYWORDS?.split(',').map(k => k.trim().toLowerCase()) || [];
+  const walletAddress = import.meta.env.NFT_WALLET_ADDRESS;
+  const apiKey = import.meta.env.NFT_OPENSEA_API_KEY;
+  const filterKeywords = import.meta.env.NFT_FILTER_KEYWORDS?.split(',').map(k => k.trim().toLowerCase()) || [];
 
   const [nfts, setNfts] = useState([]);
   const [loading, setLoading] = useState(false);
