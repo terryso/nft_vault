@@ -2,17 +2,18 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import NFTGallery from './components/NFTGallery';
+import NFTGallery from './pages/NFTGallery';
 import NFTDetail from './pages/NFTDetail';
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="flex flex-col min-h-screen">
         <Navbar />
         <div className="flex-grow">
           <Routes>
             <Route path="/" element={<NFTGallery />} />
+            <Route path="/account/:address" element={<NFTGallery />} />
             <Route path="/nft/:contractAddress/:tokenId" element={<NFTDetail />} />
           </Routes>
         </div>

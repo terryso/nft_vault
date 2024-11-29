@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import placeholderImage from '../assets/placeholder-nft.svg';
@@ -9,10 +9,38 @@ const NFTDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const requestSent = useRef(false);
 
   useEffect(() => {
+    const fetchNFTDetails = async () => {
+      if (!contractAddress || !tokenId || requestSent.current) return;
+
+      requestSent.current = true;
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await axios.get(
+          `https://api.opensea.io/api/v2/chain/ethereum/contract/${contractAddress}/nfts/${tokenId}`,
+          {
+            headers: {
+              'X-API-KEY': import.meta.env.NFT_OPENSEA_API_KEY,
+            },
+          }
+        );
+        setNft(response.data.nft);
+      } catch (err) {
+        console.error('Error fetching NFT details:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // 滚动到页面顶部并获取 NFT 详情
     window.scrollTo(0, 0);
-  }, []);
+    fetchNFTDetails();
+  }, []); // 只在组件挂载时执行一次
 
   // 检查媒体类型
   const getMediaType = (nft) => {
@@ -65,33 +93,6 @@ const NFTDetail = () => {
       />
     );
   };
-
-  useEffect(() => {
-    const fetchNFTDetails = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `https://api.opensea.io/api/v2/chain/ethereum/contract/${contractAddress}/nfts/${tokenId}`,
-          {
-            headers: {
-              'X-API-KEY': import.meta.env.NFT_OPENSEA_API_KEY,
-            },
-          }
-        );
-        setNft(response.data.nft);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-        console.error('Error fetching NFT details:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (contractAddress && tokenId) {
-      fetchNFTDetails();
-    }
-  }, [contractAddress, tokenId]);
 
   if (loading) {
     return (
@@ -181,12 +182,12 @@ const NFTDetail = () => {
                       <dt className="text-sm font-medium text-gray-500">Collection</dt>
                       <dd className="text-sm text-gray-900">
                         <a
-                          href={`https://opensea.io/collection/${typeof nft.collection === 'string' ? nft.collection : nft.traits.find(t => t.trait_type === 'collection')?.value?.toLowerCase()}`}
+                          href={`https://opensea.io/collection/${nft.collection.toLowerCase()}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-primary hover:text-primary-dark inline-flex items-center"
                         >
-                          {typeof nft.collection === 'string' ? nft.traits.find(t => t.trait_type === 'collection')?.value : nft.collection.name}
+                          {nft.collection}
                           <svg
                             className="w-4 h-4 ml-1"
                             fill="none"
