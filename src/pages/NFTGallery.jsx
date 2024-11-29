@@ -161,14 +161,14 @@ const NFTGallery = () => {
   }, [getWalletAddress, shouldFilterNFT]);
 
   useEffect(() => {
-    // Skip the first mount in strict mode
-    if (!didMount.current) {
+    const currentAddress = getWalletAddress();
+    if (!currentAddress) return;
+
+    // 在开发环境跳过第一次mount，在生产环境直接执行
+    if (process.env.NODE_ENV === 'development' && !didMount.current) {
       didMount.current = true;
       return;
     }
-
-    const currentAddress = getWalletAddress();
-    if (!currentAddress) return;
 
     setNfts([]);
     setNextCursor(null);
