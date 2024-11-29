@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "build": {
+    "env": {
+      "VITE_OPENSEA_API_KEY": "@vite_opensea_api_key",
+      "VITE_WALLET_ADDRESS": "@vite_wallet_address",
+      "VITE_FILTER_KEYWORDS": "@vite_filter_keywords"
+    }
+  }
+}
