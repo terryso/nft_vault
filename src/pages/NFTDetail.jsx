@@ -74,7 +74,7 @@ const NFTDetail = () => {
           `https://api.opensea.io/api/v2/chain/ethereum/contract/${contractAddress}/nfts/${tokenId}`,
           {
             headers: {
-              'X-API-KEY': import.meta.env.VITE_OPENSEA_API_KEY,
+              'X-API-KEY': import.meta.env.NFT_OPENSEA_API_KEY,
             },
           }
         );
@@ -109,7 +109,7 @@ const NFTDetail = () => {
       <div className="min-h-screen bg-gray-100 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="text-center text-red-600">
           <p>{error}</p>
-          <Link to="/nft" className="mt-4 text-primary hover:text-primary-dark">
+          <Link to="/" className="mt-4 text-primary hover:text-primary-dark">
             Back to Gallery
           </Link>
         </div>
@@ -122,7 +122,7 @@ const NFTDetail = () => {
       <div className="min-h-screen bg-gray-100 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="text-gray-600">NFT not found</p>
-          <Link to="/nft" className="mt-4 text-primary hover:text-primary-dark">
+          <Link to="/" className="mt-4 text-primary hover:text-primary-dark">
             Back to Gallery
           </Link>
         </div>
@@ -135,7 +135,7 @@ const NFTDetail = () => {
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
           <Link
-            to="/nft"
+            to="/"
             className="inline-flex items-center text-primary hover:text-primary-dark"
           >
             <svg
